@@ -1,0 +1,54 @@
+Installation of opencv, had to manually link the required libraries to enable compilation because of the way pacman (package manager) installed them. (Opencv4 folder existed while the program was looking for a folder named opencv2)
+Image capture through webcam.
+Splitting video into frames using either VLC CLI or FFMPEG.
+VLC wasn't able to play .mkv format which was the default format of video capture using webcam. So, picked FFMPEG over VLC.
+
+	vlc 1.mov --video-filter=scene --vout=dummy --scene-ratio=10 --scene-prefix=img- --scene-path=. vlc://quit
+	ffmpeg -i input.mov -vf "select=not(mod(n\,10))" -vsync vfr -q:v 2 img_%03d.jpg
+
+Filter out green pixels with tolerances. We can probably take an average of nearest neighbours to help in selecting.
+Object detection followed by contour detection. Use yolov3.
+Contour detection doesn't work that well.
+
+Different experiments ::
+Misregistration during digitization leads to flaws.
+For effective triangulation, pin registered filming and digitization should be used for positional constancy. Ensure constant brightness of F/G obj.
+Triangulation works well only for non-moving objects, we can avg out over consecutive shots for reducing variation in brightness.
+
+Might seem that premises are too restrictive and unrealistic, but generally works.
+
+
+problem for chroma key function is,
+first, decide which pixels in the foreground image belong to 
+	a)the blue backing and which to needed 
+	b)foreground objects and, 
+second, how to a)identify and b)process boundary pixels
+
+CK_result = (fg_pixel_value - blue_backing_contribution) + Kbg*bg_pixel_value ---> eq(1)
+
+=== problem now is, to provide a concrete algorithm to - determine Kbg and blue_backing_contribution from image data. 
+
+
+
+
+Document Learnings
+
+Loop through how much and for how long? 345x230 is the dimension of image downloaded.
+
+
+
+Use C/C++ 
+
+++ has better libraries.
+
+Composite of two videos using this.
+
+Additional ---
+
+Shot detection. B/w two cuts.
+Overlap above with face detection ( OpenCV inbuilt ); Bounding boxes (text file and in video) b/w shots
+
+
+Project :::
+
+Human eye. Moving (Attention mechanism)/Largest/brightest first recognized.
