@@ -1,2 +1,7 @@
 // Virtual Env
 chromakey/
+
+__pycache__
+*.pyc
+*.swp
+*.tmp
